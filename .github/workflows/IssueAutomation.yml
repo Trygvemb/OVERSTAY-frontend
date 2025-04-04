@@ -1,0 +1,37 @@
+name: Issue Closed when merged
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    types: [closed]
+
+jobs:
+  close-issue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Extract issue number
+        id: extract_issue
+        run: |
+          ISSUE_NUMBER=$(echo "${{ github.event.pull_request.body }}" | grep -oE '#[0-9]+' | tr -d '#')
+          echo "issue_number=$ISSUE_NUMBER" >> $GITHUB_ENV
+      - name: Close linked issue
+        if: github.event.pull_request.merged == true && env.issue_number != ''
+        uses: peter-evans/close-issue@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ env.issue_number }}
+
+      - name: Comment on the issue
+        if: github.event.pull_request.merged == true && env.issue_number != ''
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ env.issue_number }}
+          body: |
+            - [ ] ✅ Done: PR #${{ github.event.pull_request.number }} merged into `main`
