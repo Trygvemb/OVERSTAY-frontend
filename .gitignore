@@ -1,0 +1,51 @@
+# Rider-specific
+.idea/
+*.iml
+/.idea/**/workspace.xml
+/.idea/**/tasks.xml
+/.idea/**/shelf/
+
+# Build artifacts
+bin/
+obj/
+out/
+
+# Rider cache files
+/_ReSharper.Caches/
+*.sln.DotSettings.user
+
+# Dependencies
+/packages/
+*.nuget
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.DS_Store
+
+# Logs
+*.log
+
+# Coverage results
+coverage/
+*.coverage
+*.coveragexml
+
+# Publish artifacts
+*.publish/
+*.publish.settings
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+*.pidb
+*.ide
+
+# VS Code settings (if you switch editors)
+.vscode/
+
+# Docker (if using containerization)
+docker-compose.override.yml
